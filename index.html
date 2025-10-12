@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crown Words Labs · Word · Wealth · Worship</title>
+  <meta name="theme-color" content="#0B0F14">
+  <meta property="og:title" content="Crown Words Labs — Word · Wealth · Worship">
+  <meta property="og:description" content="Faith-led tools by David Kwagala: Crown Words, Eternal Investment Tracker, Worship Companion.">
+  <meta property="og:image" content="https://cxxodj.github.io/assets/crown-words-labs.png">
+  <meta property="og:url" content="https://cxxodj.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/crown-words-labs.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/crown-words-labs.png">
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#0B0F14;color:#EEE;line-height:1.6}
+    a{color:#FFD700;text-decoration:none}
+    header.hero{padding:2rem;text-align:center;background:#111}
+    .hero__logo{height:64px;margin:0 .5rem}
+    .hero__nav a{margin:0 .5rem}
+    .container{padding:2rem}
+    .grid{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .card{background:#151A20;padding:1.5rem;border-radius:8px}
+    .card__icon{width:48px;height:48px}
+    .btn{display:inline-block;margin-top:.5rem;padding:.5rem 1rem;border-radius:4px}
+    .btn-primary{background:#FFD700;color:#000}
+    .btn-secondary{background:#333;color:#FFD700;border:1px solid #FFD700}
+    footer{padding:1.5rem;text-align:center;background:#111}
+    .footer__links a{margin:0 .5rem}
+    #check-output ul{margin:.5rem 0 0 1rem;text-align:left}
+    .badge-ok{padding:.2rem .5rem;border:1px solid #2e7d32}
+    .badge-warn{padding:.2rem .5rem;border:1px solid #b71c1c}
+  </style>
+</head>
+<body>
+  <header class="hero" data-affirm="jesus_lord,scripture_final">
+    <div class="hero__social">
+      <a href="https://instagram.com/crownwords.jc" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com/@Crownwords" target="_blank" rel="noopener">YouTube</a>
+    </div>
+    <div class="hero__bar">
+      <img src="assets/dk-logo.png" alt="David Kwagala" class="hero__logo">
+      <img src="assets/crown-words-labs.png" alt="Crown Words Labs" class="hero__logo">
+      <nav class="hero__nav">
+        <a href="#subs">Subscriptions</a>
+        <a href="#about">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <h1 class="hero__title" data-affirm="jesus_lord,scripture_final">Word · Wealth · Worship</h1>
+    <p class="hero__tag">God’s Kingdom — Established Beyond Scope</p>
+    <p id="scripture" class="scripture" data-verse="auto" aria-live="polite"></p>
+  </header>
+
+  <main class="container">
+    <section id="subs" class="grid cards" role="list" aria-label="Subscriptions">
+      <article class="card" role="listitem">
+        <img src="assets/shield-cross.png" alt="Shield Cross" class="card__icon">
+        <h3>Crown Words</h3>
+        <p class="small">Daily words, devotion prompts, and declarations.</p>
+        <a class="btn btn-primary" href="https://buy.stripe.com/eVqcN70fu5chfNb1Yz0M00">Subscribe · €5/month</a>
+      </article>
+      <article class="card" role="listitem">
+        <img src="assets/angel.png" alt="Angel Icon" class="card__icon">
+        <h3>Eternal Investment Tracker</h3>
+        <p class="small">Stewardship tools for cashflow, goals, and giving.</p>
+        <a class="btn btn-primary" href="https://buy.stripe.com/6oUdRb5zO7kp58xbz90M01">Subscribe · €7/month</a>
+      </article>
+      <article class="card" role="listitem">
+        <img src="assets/angel.png" alt="Angel Icon" class="card__icon">
+        <h3>Worship Companion</h3>
+        <p class="small">Scripture-backed prayers, psalms, and audio guides.</p>
+        <a class="btn btn-primary" href="https://buy.stripe.com/dRm7sNaU834930pgTt0M02">Subscribe · €10/month</a>
+      </article>
+    </section>
+
+    <section id="about" class="card about" data-affirm="spirit_led,grace_truth">
+      <h3>About Crown Words Labs</h3>
+      <p>Faith-led tools for the modern age. Built by David Kwagala to serve Word, Wealth, and Worship with excellence and simplicity.</p>
+    </section>
+
+    <section class="card" aria-live="polite">
+      <h3>Doctrine & Excellence</h3>
+      <p class="small">Holy Ghost–aligned checks for truth and quality.</p>
+      <button class="btn btn-secondary" id="run-checks">Run Alignment Check</button>
+      <div id="check-output" class="small" role="status"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-affirm="to_gods_glory">
+    <div class="footer__brand">
+      <img src="assets/shield-cross.png" alt="Shield Cross" class="footer__logo" style="height:32px">
+      <span>GOD’S KINGDOM — Established Beyond Scope · Powered by Jesus Christ</span>
+    </div>
+    <div class="footer__links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="https://instagram.com/crownwords.jc" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com/@Crownwords" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    const CORE={
+      jesus_lord:{refs:["Rom 10:9","Col 2:6"],summary:"Jesus Christ is Lord."},
+      scripture_final:{refs:["2Tim 3:16","Jn 17:17"],summary:"Scripture is final for doctrine."},
+      spirit_led:{refs:["Rom 8:14","Jn 16:13"],summary:"Led by the Holy Spirit."},
+      grace_truth:{refs:["Jn 1:14","Eph 2:8-10"],summary:"Grace and truth working in unity."},
+      to_gods_glory:{refs:["1Cor 10:31","Col 3:17"],summary:"All for God’s glory."}
+    };
+    const VERSES=[
+      "Romans 1:17 — The righteous shall live by faith.",
+      "Psalm 91 — He who dwells in the shelter of the Most High…",
+      "Isaiah 54:17 — No weapon formed against you shall prosper.",
+      "1 Cor 15:57 — Thanks be to God, who gives us the victory through our Lord Jesus Christ.",
+      "John 4:24 — God is Spirit; worship in Spirit and truth.",
+      "Philippians 4:13 — I can do all things through Christ who strengthens me."
+    ];
+    const GATES={
+      imagesAlt(){
+        const bad=[...document.images].filter(i=>!i.alt||i.alt.trim()==="");
+        return rep(bad.length===0,"Images have alt ("+document.images.length+")",bad.map(i=>i.src));
+      },
+      linksNoopener(){
+        const ext=[...document.querySelectorAll('a[target=\"_blank\"]')];
+        const bad=ext.filter(a=>!(a.rel||"").includes("noopener"));
+        return rep(bad.length===0,"External links hardened ("+ext.length+")",bad.map(a=>a.href));
+      },
+      triadPresent(){
+        const txt=document.body.innerText.toLowerCase();
+        const ok=["word","wealth","worship"].every(k=>txt.includes(k));
+        return rep(ok,"Triad present: Word · Wealth · Worship");
+      }
+    };
+    function rep(ok,title,items){return{ok,title,items:items||[]}}
+    function doctrineScan(){
+      const nodes=[...document.querySelectorAll("[data-affirm]")];
+      const misses=[];
+      nodes.forEach(n=>{
+        const need=n.getAttribute("data-affirm").split(",").map(s=>s.trim());
+        need.forEach(k=>{if(!CORE[k])misses.push("Unknown affirm key: "+k);});
+      });
+      return rep(misses.length===0,"Doctrine keys valid on "+nodes.length+" blocks",misses);
+    }
+    function scriptureBinder(){
+      const el=document.getElementById("scripture");
+      if(!el)return rep(false,"Scripture element missing");
+      if(el.getAttribute("data-verse")==="auto"){
+        let i=Math.floor(Math.random()*VERSES.length);
+        const set=()=>{el.textContent=VERSES[i%VERSES.length];i++;};
+        set();setInterval(set,8000);
+        return rep(true,"Scripture auto-rotation active");
+      }
+      return rep(false,"Scripture auto-rotation not enabled");
+    }
+    function render(results){
+      const out=document.getElementById("check-output");
+      if(!out)return;
+      const ul=document.createElement("ul");
+      results.forEach(r=>{
+        const li=document.createElement("li");
+        li.innerHTML=`<span class=\"${r.ok?'badge-ok':'badge-warn'}\">${r.ok?'OK':'CHECK'}</span> ${r.title}`;
+        if(r.items&&r.items.length){
+          const sub=document.createElement("ul");
+          r.items.slice(0,5).forEach(x=>{const s=document.createElement("li");s.textContent=x;sub.appendChild(s);});
+          li.appendChild(sub);
+        }
+        ul.appendChild(li);
+      });
+      out.innerHTML="";out.appendChild(ul);
+    }
+    function runAll(){
+      const res=[doctrineScan(),scriptureBinder(),GATES.imagesAlt(),GATES.linksNoopener(),GATES.triadPresent()];
+      render(res);
+    }
+    document.addEventListener("DOMContentLoaded",()=>{
+      document.getElementById("run-checks")?.addEventListener("click",runAll);
+      runAll();
+    });
+  })();
+  </script>
+</body>
+</html>

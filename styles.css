@@ -1,0 +1,31 @@
+*{box-sizing:border-box}
+:root{--bg:#0b0f14;--card:#121822;--fg:#e9f0f6;--muted:#9fb0bf;--accent:#2ecc71;--accent2:#5ad67d;--shadow:0 10px 30px rgba(0,0,0,.35)}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#0b0f14,#0e141b);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.container{max-width:1000px;margin:24px auto;padding:0 16px}
+.hero{padding:28px 16px 24px;background:radial-gradient(80% 60% at 50% 0,#14202b 0%,#0b0f14 55%,#0b0f14 100%);border-bottom:1px solid rgba(255,255,255,.06)}
+.hero__bar{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1000px;margin:0 auto}
+.hero__logo{height:44px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(255,215,0,.25))}
+.hero__logo--center{height:56px}
+.hero__nav a{color:#aee6c6;text-decoration:none;margin-left:16px;font-weight:600;opacity:.9}
+.hero__nav a:hover{opacity:1;text-decoration:underline}
+.hero__title{margin:18px auto 6px;max-width:1000px;text-align:center;color:#fff;font-size:28px;letter-spacing:.5px}
+.hero__tag{margin:0 auto 8px;max-width:1000px;text-align:center;color:#c7ffdf;opacity:.85}
+.scripture{margin:6px auto 0;max-width:1000px;text-align:center;color:#9fb0bf;font-style:italic}
+.grid{display:grid;gap:16px}
+.grid.cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));padding-top:18px}
+.card{background:var(--card);border:1px solid #1c2430;border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px}
+.card .small{color:var(--muted);margin:0 0 14px}
+.card__icon{height:36px;opacity:.95;filter:drop-shadow(0 0 6px rgba(255,215,0,.18))}
+.about{margin-top:16px}
+.btn{display:inline-block;padding:12px 20px;border-radius:40px;text-decoration:none;font-weight:700;transition:transform .12s ease, box-shadow .12s ease}
+.btn-primary{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#0b0f14;box-shadow:0 6px 18px rgba(46,204,113,.35)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(46,204,113,.45)}
+.site-footer{border-top:1px solid rgba(255,255,255,.06);padding:18px 16px;margin-top:28px;color:#b5c4d1}
+.footer__brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;text-align:center}
+.footer__logo{height:22px;opacity:.9}
+.footer__links{margin-top:10px;text-align:center}
+.footer__links a{color:#9fb0bf;text-decoration:none;margin:0 8px;opacity:.85}
+.footer__links a:hover{opacity:1;text-decoration:underline}
+@media (max-width:640px){.hero__nav{display:none}.hero__logo--center{height:48px}}

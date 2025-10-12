@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Contact · Crown Words Labs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background:#0b0f14; color:#fff; font-family:Arial,sans-serif;
+      max-width:800px; margin:40px auto; padding:20px;
+    }
+    h1 { color:#2ecc71; }
+    a { color:#5ad67d; }
+    form { margin-top:20px; }
+    input, textarea {
+      width:100%; padding:10px; margin:10px 0;
+      border-radius:6px; border:1px solid #2ecc71;
+      background:#111; color:#fff;
+    }
+    button {
+      background:linear-gradient(90deg,#5ad67d,#2ecc71);
+      border:0; padding:12px 24px; border-radius:40px;
+      font-size:16px; font-weight:600; cursor:pointer;
+    }
+    button:hover {
+      transform:scale(1.05);
+      background:linear-gradient(90deg,#2ecc71,#5ad67d);
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <p>If you’d like to reach <strong>David Kwagala</strong> or Crown Words Labs, you can email us directly or use the form below.</p>
+
+  <p>Email: <a href="mailto:kwagala.david19@gmail.com">kwagala.david19@gmail.com</a></p>
+
+  <form action="https://formspree.io/f/mgegdqak" method="POST">
+    <label>Your Name</label>
+    <input type="text" name="name" required>
+
+    <label>Your Email</label>
+    <input type="email" name="_replyto" required>
+
+    <label>Message</label>
+    <textarea name="message" rows="5" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <p><a href="index.html">← Back to Home</a></p>
+</body>
+</html>
