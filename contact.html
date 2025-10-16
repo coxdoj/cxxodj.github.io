@@ -1,53 +1,64 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Contact · Crown Words Labs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-      background:#0b0f14; color:#fff; font-family:Arial,sans-serif;
-      max-width:800px; margin:40px auto; padding:20px;
-    }
-    h1 { color:#2ecc71; }
-    a { color:#5ad67d; }
-    form { margin-top:20px; }
-    input, textarea {
-      width:100%; padding:10px; margin:10px 0;
-      border-radius:6px; border:1px solid #2ecc71;
-      background:#111; color:#fff;
-    }
-    button {
-      background:linear-gradient(90deg,#5ad67d,#2ecc71);
-      border:0; padding:12px 24px; border-radius:40px;
-      font-size:16px; font-weight:600; cursor:pointer;
-    }
-    button:hover {
-      transform:scale(1.05);
-      background:linear-gradient(90deg,#2ecc71,#5ad67d);
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · Crown Words Labs</title>
+<meta name="description" content="Contact Crown Words Labs.">
+<link rel="canonical" href="/contact.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0b0b0d">
+<link rel="icon" href="/assets/img/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+<link rel="preload" href="/assets/css/style.css" as="style">
+<link rel="stylesheet" href="/assets/css/style.css">
+<meta property="og:title" content="Contact · Crown Words Labs">
+<meta property="og:description" content="Contact Crown Words Labs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cxxodj.github.io/contact.html">
+<meta property="og:image" content="https://cxxodj.github.io/assets/img/og-banner.png">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"Crown Words Labs",
+  "url":"https://cxxodj.github.io/",
+  "logo":"https://cxxodj.github.io/assets/img/icon-192.png",
+  "sameAs":["https://instagram.com/","https://youtube.com/"]
+}
+</script>
+<script defer src="/assets/js/app.js"></script>
+
 </head>
 <body>
-  <h1>Contact Us</h1>
-  <p>If you’d like to reach <strong>David Kwagala</strong> or Crown Words Labs, you can email us directly or use the form below.</p>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" role="banner">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="/">Crown Words Labs</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="navlinks">Menu</button>
+    <div id="navlinks" class="links">
+      <a href="/subscriptions.html">Subscriptions</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+<main id="main" class="container">
 
-  <p>Email: <a href="mailto:kwagala.david19@gmail.com">kwagala.david19@gmail.com</a></p>
+<h1>Contact</h1>
+<p>Email: <a href="mailto:davidkwagala27@gmail.com">davidkwagala27@gmail.com</a></p>
+<form action="https://formspree.io/f/your-id" method="POST" class="contact-form">
+  <label>Name<input name="name" required></label>
+  <label>Email<input type="email" name="email" required></label>
+  <label>Message<textarea name="message" rows="6" required></textarea></label>
+  <button class="btn" type="submit">Send</button>
+</form>
+<p class="muted">Swap the Formspree endpoint with your own.</p>
 
-  <form action="https://formspree.io/f/mgegdqak" method="POST">
-    <label>Your Name</label>
-    <input type="text" name="name" required>
-
-    <label>Your Email</label>
-    <input type="email" name="_replyto" required>
-
-    <label>Message</label>
-    <textarea name="message" rows="5" required></textarea>
-
-    <button type="submit">Send Message</button>
-  </form>
-
-  <p><a href="index.html">← Back to Home</a></p>
+</main>
+<footer class="site-footer" role="contentinfo">
+  <p>© 2025 Crown Words Labs · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+</footer>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
 </body>
 </html>
