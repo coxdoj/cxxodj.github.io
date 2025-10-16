@@ -1,0 +1,203 @@
+# Create a ready-to-upload GitHub Pages starter that fixes 404s by placing pages at repo root
+# and using root-relative links. Includes index.html, about.html, privacy.html, terms.html,
+# contact.html, 404.html, robots.txt, sitemap.xml, .nojekyll, assets/css/style.css, and README.md.
+
+import os, zipfile, textwrap, datetime
+
+root = "/mnt/data/cxxodj-pages-fix"
+assets_css_dir = os.path.join(root, "assets", "css")
+os.makedirs(assets_css_dir, exist_ok=True)
+
+now = datetime.date.today().isoformat()
+
+base_head = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crown Words Labs</title>
+  <meta name="description" content="Word · Wealth · Worship — Faith-led tools for the modern age.">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="icon" href="/assets/favicon.ico">
+</head>
+<body>
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="/">Crown Words Labs</a>
+    <a href="/subscriptions.html">Subscriptions</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+</header>
+<main class="container">
+"""
+
+base_footer = """
+</main>
+<footer class="site-footer">
+  <p>© {year} Crown Words Labs. <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+</footer>
+</body>
+</html>
+""".format(year=datetime.date.today().year)
+
+index_html = base_head + """
+  <h1>Word · Wealth · Worship</h1>
+  <p>God’s Kingdom — established beyond scope. Isaiah 54:17.</p>
+
+  <section class="cards">
+    <article class="card">
+      <h2>Crown Words</h2>
+      <p>Daily words, devotion prompts, and declarations.</p>
+      <a class="btn" href="/subscriptions.html#crown-words">Subscribe</a>
+    </article>
+    <article class="card">
+      <h2>Eternal Investment Tracker</h2>
+      <p>Stewardship tools for cashflow, goals, and giving.</p>
+      <a class="btn" href="/subscriptions.html#eit">Subscribe</a>
+    </article>
+    <article class="card">
+      <h2>Worship Companion</h2>
+      <p>Scripture-backed prayers, psalms, and audio guides.</p>
+      <a class="btn" href="/subscriptions.html#wc">Subscribe</a>
+    </article>
+  </section>
+
+  <section>
+    <h3>Doctrine & Excellence</h3>
+    <p>Holy Ghost-aligned checks for truth and quality.</p>
+  </section>
+""" + base_footer
+
+subscriptions_html = base_head + """
+  <h1>Subscriptions</h1>
+  <p>Choose a plan below to support the work.</p>
+  <ul>
+    <li id="crown-words"><strong>Crown Words</strong> — €5/month</li>
+    <li id="eit"><strong>Eternal Investment Tracker</strong> — €7/month</li>
+    <li id="wc"><strong>Worship Companion</strong> — €10/month</li>
+  </ul>
+  <p>Add your real payment links later.</p>
+""" + base_footer
+
+about_html = base_head + """
+  <h1>About</h1>
+  <p>Built by David Kwagala to serve Word, Wealth, and Worship with excellence and simplicity.</p>
+""" + base_footer
+
+privacy_html = base_head + """
+  <h1>Privacy Policy</h1>
+  <p>This site does not collect personal data beyond what is necessary to deliver services.
+     Replace this paragraph with your actual policy.</p>
+""" + base_footer
+
+terms_html = base_head + """
+  <h1>Terms of Use</h1>
+  <p>By using this site you agree to the standard terms listed here. Replace with your actual terms.</p>
+""" + base_footer
+
+contact_html = base_head + """
+  <h1>Contact</h1>
+  <p>Email: <a href="mailto:davidkwagala27@gmail.com">davidkwagala27@gmail.com</a></p>
+""" + base_footer
+
+not_found_html = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <meta http-equiv="refresh" content="5; url=/" />
+</head>
+<body>
+  <main class="container">
+    <h1>404 — Page not found</h1>
+    <p>The page you were looking for isn’t here. You’ll be sent home in a moment.</p>
+    <p><a class="btn" href="/">Go home now</a></p>
+  </main>
+</body>
+</html>
+"""
+
+style_css = """
+:root { --bg:#0b0b0d; --fg:#f5f5f7; --muted:#c9c9ce; --card:#16161a; --accent:#f0c14b; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--fg);text-decoration:none} a:hover{text-decoration:underline}
+.site-header{border-bottom:1px solid #222;background:#0e0e11;position:sticky;top:0}
+.nav{max-width:980px;margin:0 auto;display:flex;gap:16px;align-items:center;padding:12px 16px}
+.brand{font-weight:700;margin-right:auto}
+.container{max-width:980px;margin:24px auto;padding:0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);padding:16px;border:1px solid #232329;border-radius:10px}
+.btn{display:inline-block;background:var(--accent);color:#000;padding:8px 12px;border-radius:6px;font-weight:600}
+.site-footer{border-top:1px solid #222;margin-top:48px;padding:16px;color:var(--muted);text-align:center}
+"""
+
+robots_txt = "User-agent: *\nAllow: /\nSitemap: https://cxxodj.github.io/sitemap.xml\n"
+
+sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://cxxodj.github.io/</loc><lastmod>{now}</lastmod></url>
+  <url><loc>https://cxxodj.github.io/about.html</loc><lastmod>{now}</lastmod></url>
+  <url><loc>https://cxxodj.github.io/privacy.html</loc><lastmod>{now}</lastmod></url>
+  <url><loc>https://cxxodj.github.io/terms.html</loc><lastmod>{now}</lastmod></url>
+  <url><loc>https://cxxodj.github.io/contact.html</loc><lastmod>{now}</lastmod></url>
+  <url><loc>https://cxxodj.github.io/subscriptions.html</loc><lastmod>{now}</lastmod></url>
+</urlset>
+"""
+
+readme = textwrap.dedent("""
+# Crown Words Labs — Pages Fix
+
+This folder is a drop-in root for your `cxxodj.github.io` repository so your links stop 404-ing.
+
+## Quick deploy
+1. Download the ZIP and extract it.
+2. In your `cxxodj.github.io` repo, upload *all* files to the repository **root** (not into a subfolder).
+3. Ensure **Settings → Pages** is set to *Deploy from branch: main* and */ (root)*.
+4. Commit. Wait up to a minute for deployment.
+
+## Notes
+- Links are **root-relative** (e.g. `/about.html`) so they work in this user site.
+- `.nojekyll` disables Jekyll processing.
+- `404.html` catches bad links and redirects home after 5 seconds.
+- Update texts and add real subscription links in `subscriptions.html`.
+""")
+
+# Write files
+files = {
+    os.path.join(root, "index.html"): index_html,
+    os.path.join(root, "subscriptions.html"): subscriptions_html,
+    os.path.join(root, "about.html"): about_html,
+    os.path.join(root, "privacy.html"): privacy_html,
+    os.path.join(root, "terms.html"): terms_html,
+    os.path.join(root, "contact.html"): contact_html,
+    os.path.join(root, "404.html"): not_found_html,
+    os.path.join(root, "robots.txt"): robots_txt,
+    os.path.join(root, "sitemap.xml"): sitemap_xml,
+    os.path.join(root, "README.md"): readme,
+    os.path.join(root, ".nojekyll"): ""
+}
+for path, content in files.items():
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+with open(os.path.join(assets_css_dir, "style.css"), "w", encoding="utf-8") as f:
+    f.write(style_css)
+
+# tiny placeholder favicon
+with open(os.path.join(root, "assets", "favicon.ico"), "wb") as f:
+    f.write(b"\x00\x00\x01\x00\x01\x00\x10\x10\x10\x00\x01\x00\x04\x00(\x01\x00\x00\x16\x00\x00\x00"
+            b"\x28\x00\x00\x00\x10\x00\x00\x00\x10\x00\x00\x00\x01\x00\x04\x00\x00\x00\x00\x00\x80\x00"
+            b"\x00\x00\x13\x0B\x00\x00\x13\x0B\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" + b"\x00"*512)
+
+# Zip it
+zip_path = "/mnt/data/cxxodj-pages-fix.zip"
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for folder, _, filenames in os.walk(root):
+        for name in filenames:
+            full = os.path.join(folder, name)
+            z.write(full, arcname=os.path.relpath(full, root))
+
+zip_path
