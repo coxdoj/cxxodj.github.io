@@ -236,3 +236,197 @@
 </script>
 </body>
 </html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>coxdoj</title>
+  <meta name="description" content="Official site for coxdoj on GitHub Pages.">
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #0f172a;       /* slate-900 */
+      --panel: #111827;    /* gray-900 */
+      --text: #e5e7eb;     /* gray-200 */
+      --muted: #9ca3af;    /* gray-400 */
+      --accent: #60a5fa;   /* blue-400 */
+      --accent-2: #34d399; /* emerald-400 */
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, "SF Pro Text", "Helvetica Neue", Arial, system-ui, "Segoe UI", Roboto, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -20%, rgba(96,165,250,.15), transparent 60%),
+                  radial-gradient(800px 600px at 10% 110%, rgba(52,211,153,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(900px, 92vw);
+      background: color-mix(in oklab, var(--panel), black 8%);
+      border: 1px solid color-mix(in oklab, var(--panel), white 8%);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      backdrop-filter: blur(6px);
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .logo {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center;
+      color: #0b1220;
+      font-weight: 900;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 16px;
+      transition: color .2s ease;
+    }
+    nav a:hover { color: var(--text) }
+    h1 {
+      font-size: clamp(28px, 3.5vw, 40px);
+      line-height: 1.2;
+      margin: 0 0 8px 0;
+    }
+    p.lead {
+      color: var(--muted);
+      margin: 0 0 18px 0;
+      font-size: clamp(15px, 2vw, 18px);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .tile {
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 16px;
+      background: rgba(255,255,255,.02);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .tile:hover {
+      transform: translateY(-2px);
+      border-color: rgba(96,165,250,.35);
+      background: rgba(96,165,250,.05);
+    }
+    .tile h3 { margin: 0 0 6px 0; font-size: 16px }
+    .tile p { margin: 0; color: var(--muted); font-size: 14px }
+    .actions {
+      margin-top: 18px;
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform .1s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(96,165,250,.5) }
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, color-mix(in oklab, var(--accent), white 8%), color-mix(in oklab, var(--accent-2), white 4%));
+      color: #0b1220;
+    }
+    footer {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    code {
+      background: rgba(255,255,255,.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 85%;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">C</div>
+        <div>coxdoj</div>
+      </div>
+      <nav aria-label="Primary">
+        <a href="https://github.com/coxdoj" target="_blank" rel="noopener">GitHub</a>
+        <a href="./" aria-current="page">Home</a>
+      </nav>
+    </header>
+
+    <section>
+      <h1>Welcome</h1>
+      <p class="lead">This site is hosted on GitHub Pages for the coxdoj account. Replace this content with your own, or keep it as a starter.</p>
+
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/coxdoj/cxxodj.github.io" target="_blank" rel="noopener">View Repository</a>
+        <a class="btn" href="https://coxdoj.github.io" target="_blank" rel="noopener">Open Site</a>
+      </div>
+
+      <div class="grid">
+        <div class="tile">
+          <h3>Getting started</h3>
+          <p>Edit <code>index.html</code> and push to <code>main</code>. Pages will update automatically.</p>
+        </div>
+        <div class="tile">
+          <h3>Custom domain</h3>
+          <p>Add your domain in Settings → Pages and create a <code>CNAME</code> record.</p>
+        </div>
+        <div class="tile">
+          <h3>No Jekyll?</h3>
+          <p>Add an empty <code>.nojekyll</code> file if you’re serving raw assets or DocC.</p>
+        </div>
+        <div class="tile">
+          <h3>Support</h3>
+          <p>Check Pages build status in the repo’s Settings → Pages or Actions tab.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> coxdoj</div>
+      <div>Built with GitHub Pages</div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
