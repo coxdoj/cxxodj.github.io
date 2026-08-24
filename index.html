@@ -217,6 +217,49 @@
       </div>
     </div>
   </section>
+
+  <section id="media-sanctuary" class="media-sanctuary" aria-labelledby="media-sanctuary-title">
+    <style>
+      .media-sanctuary{margin:clamp(2rem,6vw,5rem) auto;padding:clamp(1.25rem,4vw,2.5rem);max-width:1100px;border:1px solid rgba(255,215,128,.28);border-radius:28px;background:linear-gradient(145deg,rgba(19,24,38,.96),rgba(34,24,46,.92));box-shadow:0 28px 70px rgba(0,0,0,.28);color:#fff}
+      .media-sanctuary__eyebrow{margin:0 0 .55rem;color:#f7cf79;font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+      .media-sanctuary h2{margin:.15rem 0 .65rem;font-size:clamp(1.8rem,4vw,3.25rem);line-height:1.05}
+      .media-sanctuary__intro{max-width:720px;margin:0;color:rgba(255,255,255,.76);font-size:clamp(1rem,2vw,1.15rem);line-height:1.7}
+      .media-sanctuary__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1rem;margin-top:1.6rem}
+      .media-card{min-height:240px;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:radial-gradient(circle at 75% 20%,rgba(247,207,121,.2),transparent 35%),rgba(255,255,255,.05)}
+      .media-card__icon{width:3rem;height:3rem;display:grid;place-items:center;margin-bottom:auto;border-radius:999px;background:rgba(247,207,121,.15);color:#f7cf79;font-size:1.25rem}
+      .media-card h3{margin:1.25rem 0 .45rem;font-size:1.18rem}
+      .media-card p{margin:0 0 1rem;color:rgba(255,255,255,.68);line-height:1.55}
+      .media-card button{align-self:flex-start;padding:.7rem 1rem;border:1px solid rgba(247,207,121,.38);border-radius:999px;background:transparent;color:#f7cf79;font:inherit;font-weight:700;cursor:not-allowed;opacity:.82}
+      .media-sanctuary__status{display:flex;gap:.65rem;align-items:center;margin-top:1.3rem;color:rgba(255,255,255,.66);font-size:.9rem}
+      .media-sanctuary__status::before{content:"";width:.65rem;height:.65rem;border-radius:50%;background:#f7cf79;box-shadow:0 0 16px rgba(247,207,121,.75)}
+      @media (prefers-reduced-motion:no-preference){.media-card{transition:transform .25s ease,border-color .25s ease}.media-card:hover{transform:translateY(-4px);border-color:rgba(247,207,121,.42)}}
+    </style>
+    <p class="media-sanctuary__eyebrow">CrownWords Media</p>
+    <h2 id="media-sanctuary-title">Media Sanctuary</h2>
+    <p class="media-sanctuary__intro">A prepared home for future CrownWords video, audio, worship, teaching, and testimony. The space is ready; approved media will be connected when it is produced.</p>
+    <div class="media-sanctuary__grid">
+      <article class="media-card">
+        <div class="media-card__icon" aria-hidden="true">▶</div>
+        <h3>Video experiences</h3>
+        <p>Immersive CrownWords films, teachings, declarations, and visual stories will live here.</p>
+        <button type="button" disabled aria-disabled="true">Video coming later</button>
+      </article>
+      <article class="media-card">
+        <div class="media-card__icon" aria-hidden="true">♫</div>
+        <h3>Audio sanctuary</h3>
+        <p>Future worship, spoken Word, meditations, and sound experiences will load here.</p>
+        <button type="button" disabled aria-disabled="true">Audio coming later</button>
+      </article>
+      <article class="media-card">
+        <div class="media-card__icon" aria-hidden="true">✦</div>
+        <h3>Interactive journeys</h3>
+        <p>Guided, accessible experiences will connect media across phones, tablets, desktops, and emerging displays.</p>
+        <button type="button" disabled aria-disabled="true">Experience in preparation</button>
+      </article>
+    </div>
+    <p class="media-sanctuary__status" role="status">Media framework ready — no files are loaded yet.</p>
+  </section>
+
 </main>
 
 <footer>
