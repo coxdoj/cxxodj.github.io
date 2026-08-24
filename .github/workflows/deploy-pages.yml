@@ -1,84 +1,81 @@
----
-name: Deploy to GitHub Pages
+name: Public boundary and GitHub Pages
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
+  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run
-# in-progress and latest queued. However, do NOT cancel in-progress runs as
-# we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  # Build job
-  build:
+  review-public-boundary:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout reviewed source
         uses: actions/checkout@v4
 
-      - name: Detect build requirements
-        id: detect
+      - name: Build explicit public artifact
+        shell: bash
         run: |
-          if [ -f "package.json" ]; then
-            echo "needs_build=true" >> $GITHUB_OUTPUT
-            echo "Build step detected: package.json found"
-          else
-            echo "needs_build=false" >> $GITHUB_OUTPUT
-            echo "No build step needed: deploying static files"
+          set -euo pipefail
+          mkdir -p _site
+
+          public_files=(
+            404.html about.html contact.html index.html manifest.webmanifest
+            privacy.html psalms.html robots.txt sitemap.xml subscriptions.html
+            sw.js terms.html style.css styles.css
+            angel.png crown-words-labs.png dk-logo.png icon-192.png icon-512.png
+            og-banner.png shield-cross.png
+          )
+          public_dirs=(Third-Floor ThirdFloor content third-floor thirdfloor)
+
+          for path in "${public_files[@]}"; do
+            if [[ -f "$path" ]]; then cp "$path" _site/; fi
+          done
+          for path in "${public_dirs[@]}"; do
+            if [[ -d "$path" ]]; then cp -R "$path" _site/; fi
+          done
+
+      - name: Reject private material from public artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find _site -type f \( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \) -print -quit | grep -q .; then
+            echo "Blocked: a private or archive file entered the public artifact."
+            exit 1
           fi
-
-      - name: Setup Node.js
-        if: steps.detect.outputs.needs_build == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        if: steps.detect.outputs.needs_build == 'true'
-        run: npm ci
-
-      - name: Build site
-        if: steps.detect.outputs.needs_build == 'true'
-        run: |
-          if npm run build --if-present; then
-            echo "Build completed successfully"
-          else
-            echo "Build failed"
+          if grep -RIEq --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.gif' '(AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)' _site; then
+            echo "Blocked: a credential-like value entered the public artifact."
             exit 1
           fi
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload reviewed public artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository for static sites, or dist/build folder
-          # for built sites
-          path: >-
-            ${{ steps.detect.outputs.needs_build == 'true' &&
-            (hashFiles('dist/**') != '' && 'dist' ||
-            hashFiles('build/**') != '' && 'build' || '.') || '.' }}
+          path: _site
 
-  # Deployment job
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: review-public-boundary
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy reviewed public artifact
         id: deployment
         uses: actions/deploy-pages@v4
