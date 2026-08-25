@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if find . -path './.git' -prune -o -type f \\( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \\) -print -quit | grep -q .; then
+          if find . -path './.git' -prune -o -type f \( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \) -print -quit | grep -q .; then
             echo "Blocked: private, archive, application-source, environment, or signing material is tracked."
             exit 1
           fi
@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if find _site -type f \\( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \\) -print -quit | grep -q .; then
+          if find _site -type f \( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \) -print -quit | grep -q .; then
             echo "Blocked: a private file entered the public artifact."
             exit 1
           fi
