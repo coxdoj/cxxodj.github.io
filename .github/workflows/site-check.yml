@@ -1,16 +1,56 @@
-name: Site check
+name: Public site validation
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
-  pull_request:
+permissions:
+  contents: read
 jobs:
-  links:
+  validate-public-site:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Link checker
-        uses: lycheeverse/lychee-action@v1
-        with:
-          args: --verbose --no-progress "./**/*.md" "./**/*.html"
-          fail: true
+      - uses: actions/checkout@v4
+      - name: Validate public files and local links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse, unquote
+          import sys
+
+          root = Path('.').resolve()
+          public_html = [p for p in root.glob('*.html') if p.is_file()]
+          errors = []
+          forbidden = ('cxxodj.github.io', '/assets/img/', '/assets/css/', '/assets/js/', 'formspree.io/f/your-id')
+
+          class Links(HTMLParser):
+              def __init__(self, source):
+                  super().__init__(); self.source = source
+              def handle_starttag(self, tag, attrs):
+                  values = dict(attrs)
+                  for key in ('href','src'):
+                      value = values.get(key)
+                      if not value or value.startswith(('#','mailto:','tel:','data:')): continue
+                      if any(token in value for token in forbidden):
+                          errors.append(f'{self.source.name}: forbidden placeholder or stale path')
+                      parsed = urlparse(value)
+                      if parsed.scheme or parsed.netloc: continue
+                      path = unquote(parsed.path)
+                      if not path: continue
+                      target = root / (path.lstrip('/') if path.startswith('/') else str(self.source.parent / path))
+                      if path.endswith('/'): target = target / 'index.html'
+                      if not target.exists(): errors.append(f'{self.source.name}: missing local target {path}')
+
+          for source in public_html:
+              parser = Links(source)
+              parser.feed(source.read_text(encoding='utf-8'))
+
+          if errors:
+              print('Public site validation failed:')
+              for error in sorted(set(errors)): print('-', error)
+              sys.exit(1)
+          print(f'Validated {len(public_html)} public HTML files.')
+          PY
