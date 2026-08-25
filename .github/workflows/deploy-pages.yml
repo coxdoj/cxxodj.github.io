@@ -1,81 +1,78 @@
 name: Public boundary and GitHub Pages
-
 on:
   pull_request:
     branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
   review-public-boundary:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout reviewed source
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+      - name: Reject private material from repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -path './.git' -prune -o -type f \\( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \\) -print -quit | grep -q .; then
+            echo "Blocked: private, archive, application-source, environment, or signing material is tracked."
+            exit 1
+          fi
+          if grep -RIEq --exclude-dir=.git --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.gif' '(AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)' .; then
+            echo "Blocked: a credential-like value is present in the reviewed repository."
+            exit 1
+          fi
       - name: Build explicit public artifact
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p _site
-
-          public_files=(
-            404.html about.html contact.html index.html manifest.webmanifest
-            privacy.html psalms.html robots.txt sitemap.xml subscriptions.html
-            sw.js terms.html style.css styles.css
-            angel.png crown-words-labs.png dk-logo.png icon-192.png icon-512.png
-            og-banner.png shield-cross.png
-          )
+          public_files=(404.html about.html contact.html index.html manifest.webmanifest privacy.html psalms.html robots.txt sitemap.xml subscriptions.html sw.js terms.html site.css site.js angel.png crown-words-labs.png dk-logo.png icon-192.png icon-512.png og-banner.png shield-cross.png)
           public_dirs=(Third-Floor ThirdFloor content third-floor thirdfloor)
-
-          for path in "${public_files[@]}"; do
-            if [[ -f "$path" ]]; then cp "$path" _site/; fi
-          done
-          for path in "${public_dirs[@]}"; do
-            if [[ -d "$path" ]]; then cp -R "$path" _site/; fi
-          done
-
-      - name: Reject private material from public artifact
+          for path in "${public_files[@]}"; do [[ ! -f "$path" ]] || cp "$path" _site/; done
+          for path in "${public_dirs[@]}"; do [[ ! -d "$path" ]] || cp -R "$path" _site/; done
+      - name: Verify artifact boundary
         shell: bash
         run: |
           set -euo pipefail
-          if find _site -type f \( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \) -print -quit | grep -q .; then
-            echo "Blocked: a private or archive file entered the public artifact."
+          if find _site -type f \\( -iname '*.zip' -o -iname '*.swift' -o -iname '*.key' -o -iname '*.pem' -o -iname '*.p12' -o -iname '*.mobileprovision' -o -iname '.env*' \\) -print -quit | grep -q .; then
+            echo "Blocked: a private file entered the public artifact."
             exit 1
           fi
-          if grep -RIEq --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.gif' '(AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)' _site; then
-            echo "Blocked: a credential-like value entered the public artifact."
-            exit 1
-          fi
-
-      - name: Setup Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/configure-pages@v5
-
-      - name: Upload reviewed public artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: review-public-boundary
     steps:
+      - uses: actions/checkout@v4
+      - name: Build reviewed public artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          public_files=(404.html about.html contact.html index.html manifest.webmanifest privacy.html psalms.html robots.txt sitemap.xml subscriptions.html sw.js terms.html site.css site.js angel.png crown-words-labs.png dk-logo.png icon-192.png icon-512.png og-banner.png shield-cross.png)
+          public_dirs=(Third-Floor ThirdFloor content third-floor thirdfloor)
+          for path in "${public_files[@]}"; do [[ ! -f "$path" ]] || cp "$path" _site/; done
+          for path in "${public_dirs[@]}"; do [[ ! -d "$path" ]] || cp -R "$path" _site/; done
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
       - name: Deploy reviewed public artifact
         id: deployment
         uses: actions/deploy-pages@v4
