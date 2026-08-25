@@ -1,9 +1,1 @@
-
-const CACHE_NAME='cwl-v1';
-const CORE=['/','/index.html','/assets/css/style.css','/assets/js/app.js','/subscriptions.html','/about.html','/contact.html','/privacy.html','/terms.html'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(CORE)))});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))))});
-self.addEventListener('fetch',e=>{
-  const req=e.request;
-  e.respondWith(caches.match(req).then(r=> r || fetch(req).then(resp=>{ if(req.method==='GET' && resp.ok){ const copy=resp.clone(); caches.open(CACHE_NAME).then(c=>c.put(req, copy)); } return resp; }).catch(()=>caches.match('/index.html')) ));
-});
+const CACHE='crownwords-v3';const CORE=['/','/index.html','/site.css','/site.js','/about.html','/contact.html','/privacy.html','/terms.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/og-banner.png'];self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE))));self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))));self.addEventListener('fetch',event=>{if(event.request.method!=='GET')return;event.respondWith(fetch(event.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response;}).catch(()=>caches.match(event.request).then(hit=>hit||caches.match('/'))));});
