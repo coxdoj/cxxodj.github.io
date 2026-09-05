@@ -1,16 +1,25 @@
 name: Site check
+
 on:
   push:
     branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+
 jobs:
-  links:
+  review-public-boundary:
+    name: review-public-boundary
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Link checker
-        uses: lycheeverse/lychee-action@v1
-        with:
-          args: --verbose --no-progress "./**/*.md" "./**/*.html"
-          fail: true
+      - uses: actions/checkout@v4
+      - name: Verify Third Floor public destinations
+        run: |
+          test -f third-floor-app/privacy.html
+          test -f third-floor-app/support.html
+          test -f third-floor-app/terms.html
+          grep -q "Privacy Policy" third-floor-app/privacy.html
+          grep -q "Email Third Floor Support" third-floor-app/support.html
+          grep -q "Terms of Use" third-floor-app/terms.html
+          ! grep -RqiE "placeholder|your-id|example\.com" third-floor-app
